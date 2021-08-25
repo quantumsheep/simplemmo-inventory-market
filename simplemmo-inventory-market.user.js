@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SimpleMMO Inventory Market
 // @namespace    https://github.com/quantumsheep/simplemmo-inventory-market
-// @version      1.0
+// @version      1.1
 // @description  Easy market listing
 // @author       QuantumSheep
 // @match        https://web.simple-mmo.com/inventory/items*
@@ -17,9 +17,6 @@
 <a class="text-indigo-800 font-semibold hover:text-indigo-900" href="#!">
   Market Value
 </a>
-</th>
-<th scope="col" class="relative px-6 py-3 hidden xl:table-cell">
-<span class="sr-only">Actions</span>
 </th>
   `.trim());
 
@@ -43,14 +40,16 @@
 </td>
   `.trim());
 
-    item.querySelector('td:last-child').insertAdjacentHTML('beforebegin', `
-<td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium dark:text-white hidden xl:table-cell">
+    const lastColumn = item.querySelector('td:last-child');
+    lastColumn.classList.remove('text-right');
+    lastColumn.classList.add('text-left');
+
+    lastColumn.insertAdjacentHTML('afterbegin', `
 <a onclick="if (!window.__cfRLUnblockHandlers) return false; marketSellItem(${itemId}, '${name}', '${icon}', ${quantity});" href="javascript:;">
 <button type="button" class="dark:text-white relative inline-flex items-center px-4 py-2 rounded-md border border-gray-300 bg-green-400 text-sm font-medium text-white hover:bg-green-500 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
   Sell
 </button>
 </a>
-</td>
   `.trim());
   });
 })();
